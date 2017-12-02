@@ -1,0 +1,6 @@
+{
+  "outFile": "dist/assemblyscript.wasm",
+  "optimize": true,
+  "textFile": false,
+  "target": "wasm32"
+}

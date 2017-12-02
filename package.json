@@ -1,0 +1,20 @@
+{
+  "name": "rust-wasm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Muhammad Fawwaz Orabi <mfawwaz93@gmail.com>",
+  "scripts": {
+    "build/as": "asc src/add.as",
+    "build/rust": "rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o dist/rust.wasm && wasm-gc dist/rust.wasm dist/rust.wasm",
+    "build": "run-p 'build/*'",
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "assemblyscript": "^0.3.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "npm-run-all": "^4.1.2"
+  }
+}
