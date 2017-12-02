@@ -4,14 +4,15 @@
   "main": "index.js",
   "author": "Muhammad Fawwaz Orabi <mfawwaz93@gmail.com>",
   "scripts": {
-    "build/as": "asc src/add.as",
+    "build/as": "asc src/add.ts",
     "build/rust": "rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o dist/rust.wasm && wasm-gc dist/rust.wasm dist/rust.wasm",
     "build": "run-p 'build/*'",
     "start": "node index.js"
   },
   "license": "MIT",
   "devDependencies": {
-    "assemblyscript": "^0.3.0"
+    "assemblyscript": "^0.3.0",
+    "typescript": "^2.6.2"
   },
   "dependencies": {
     "lodash": "^4.17.4",
