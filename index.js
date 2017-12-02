@@ -30,8 +30,8 @@ async function benchmarkWasm(file, iterations) {
 async function main() {
   const iterations = Number(process.env.ITERATIONS) || 100000000;
   console.log(`Iterations: ${iterations}`);
-  console.log(assemblyFile, await benchmarkWasm(assemblyFile, iterations));
-  console.log(rustFile, await benchmarkWasm(rustFile, iterations));
+  console.log('AssemblyScript', await benchmarkWasm(assemblyFile, iterations));
+  console.log('Rust', await benchmarkWasm(rustFile, iterations));
   const { add, add_one } = js;
   console.log('JS', benchmark(() => {
     add_one(5);
