@@ -28,7 +28,7 @@ async function benchmarkWasm(file, iterations) {
 }
 
 async function main() {
-  const iterations = Number(process.env.ITERATIONS) || 100000000
+  const iterations = Number(process.env.ITERATIONS) || 100000000;
   console.log(`Iterations: ${iterations}`);
   console.log(assemblyFile, await benchmarkWasm(assemblyFile, iterations));
   console.log(rustFile, await benchmarkWasm(rustFile, iterations));
