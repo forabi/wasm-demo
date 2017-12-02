@@ -7,23 +7,36 @@ const readFile = promisify(fs.readFile);
 const rustFile = './dist/rust.wasm';
 const assemblyFile = './dist/assemblyscript.wasm';
 
-async function benchmark(file, iterations = 100000000) {
+const js = require('./src/add.js');
+
+function benchmark(fn, iterations) {
+  const start = Date.now();
+  times(iterations, () => fn());
+  const end = Date.now();
+  return end - start;
+}
+
+async function benchmarkWasm(file, iterations) {
   const { buffer } = await readFile(file);
   const results = await WebAssembly.instantiate(buffer, { });
 
   const { add_one, add } = results.instance.exports;
-  const start = Date.now();
-  times(iterations, () => {
+  return benchmark(() => {
     add_one(5);
     add(5, 6);
-  });
-  const end = Date.now();
-  return (end - start);
+  }, iterations);
 }
 
 async function main() {
-  console.log(assemblyFile, await benchmark(assemblyFile));
-  console.log(rustFile, await benchmark(rustFile));
+  const iterations = Number(process.env.ITERATIONS) || 100000000
+  console.log(`Iterations: ${iterations}`);
+  console.log(assemblyFile, await benchmarkWasm(assemblyFile, iterations));
+  console.log(rustFile, await benchmarkWasm(rustFile, iterations));
+  const { add, add_one } = js;
+  console.log('JS', benchmark(() => {
+    add_one(5);
+    add(5, 6);
+  }, iterations))
 };
 
 main();
